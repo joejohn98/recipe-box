@@ -4,6 +4,7 @@ import { RecipeProvider } from "./context/RecipeContext";
 import { ThemeProvider } from "./context/ThemeContext";
 import { Toaster } from "react-hot-toast";
 import RecipeList from "./components/RecipeList";
+import Header from "./components/Header";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <RecipeProvider>
        <Router>
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+          <Header />
          <main className="container mx-auto px-4 py-8">
           <Routes>
             <Route path="/" element={<RecipeList/>} />
