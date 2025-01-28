@@ -6,6 +6,7 @@ import { Toaster } from "react-hot-toast";
 import RecipeList from "./components/RecipeList";
 import Header from "./components/Header";
 import AddRecipe from "./components/AddRecipe";
+import RecipeDetail from "./components/RecipeDetail";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Routes>
             <Route path="/" element={<RecipeList/>} />
             <Route path="/add" element={<AddRecipe />} />
+            <Route path="/recipe/:id" element={<RecipeDetail/>} />
           </Routes>
          </main>
         </div>
