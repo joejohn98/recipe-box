@@ -5,6 +5,7 @@ import { ThemeProvider } from "./context/ThemeContext";
 import { Toaster } from "react-hot-toast";
 import RecipeList from "./components/RecipeList";
 import Header from "./components/Header";
+import AddRecipe from "./components/AddRecipe";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
          <main className="container mx-auto px-4 py-8">
           <Routes>
             <Route path="/" element={<RecipeList/>} />
+            <Route path="/add" element={<AddRecipe />} />
           </Routes>
          </main>
         </div>
