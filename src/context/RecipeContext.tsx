@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { defaultRecipes } from "../data/defaultRecipes";
 
 export interface Recipe {
   id: string;
@@ -24,20 +25,17 @@ interface RecipeContextType {
 
 const RecipeContext = createContext<RecipeContextType | undefined>(undefined);
 
-export const useRecipes = () => {
-  const context = useContext(RecipeContext);
-  if (!context) {
-    throw new Error("useRecipes must be used within a RecipeProvider");
-  }
-  return context;
-};
-
 export const RecipeProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [recipes, setRecipes] = useState<Recipe[]>(() => {
     const savedRecipes = localStorage.getItem("recipes");
-    return savedRecipes ? JSON.parse(savedRecipes) : [];
+    // Initialize with default recipes if no recipes exist in localStorage
+    if (!savedRecipes || JSON.parse(savedRecipes).length === 0) {
+      localStorage.setItem("recipes", JSON.stringify(defaultRecipes));
+      return defaultRecipes;
+    }
+    return JSON.parse(savedRecipes);
   });
 
   useEffect(() => {
@@ -88,4 +86,11 @@ export const RecipeProvider: React.FC<{ children: React.ReactNode }> = ({
       {children}
     </RecipeContext.Provider>
   );
+};
+export const useRecipes = () => {
+  const context = useContext(RecipeContext);
+  if (!context) {
+    throw new Error("useRecipes must be used within a RecipeProvider");
+  }
+  return context;
 };
