@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useRecipes, Recipe } from "../../context/RecipeContext";
 import toast from "react-hot-toast";
 import { ArrowLeft } from "lucide-react";
+import EditForm from "../form/EditForm";
+import RecipeView from "./RecipeView";
 
 const RecipeDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
