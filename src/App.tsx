@@ -3,10 +3,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { RecipeProvider } from "./context/RecipeContext";
 import { ThemeProvider } from "./context/ThemeContext";
 import { Toaster } from "react-hot-toast";
-import RecipeList from "./components/RecipeList";
-import Header from "./components/Header";
-import AddRecipe from "./components/AddRecipe";
+
 import RecipeDetail from "./components/recipe/RecipeDetail";
+import RecipeList from "./components/recipe/RecipeList";
+import AddRecipe from "./components/form/AddRecipe";
+import Header from "./components/layout/Header";
 
 function App() {
   return (
