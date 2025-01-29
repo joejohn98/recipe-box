@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useRecipes } from "../../context/RecipeContext";
 import { Clock, Activity, Heart, UtensilsCrossed } from "lucide-react";
+import SearchBar from "../common/SearchBar";
 
 
 const RecipeList: React.FC = () => {
