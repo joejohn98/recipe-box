@@ -23,7 +23,6 @@ const AddRecipe: React.FC = () => {
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
-    
     const { name, value } = e.target;
     setRecipe((prev) => ({ ...prev, [name]: value }));
   };
@@ -61,7 +60,7 @@ const AddRecipe: React.FC = () => {
             value={recipe.name}
             onChange={handleChange}
             required
-            className="w-full p-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-transparent transition-colors duration-200"
+            className="w-full p-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-1 focus:ring-emerald-500 focus:outline-none dark:focus:ring-emerald-400 transition-colors duration-200"
             placeholder="Enter recipe name"
           />
         </div>
@@ -79,7 +78,7 @@ const AddRecipe: React.FC = () => {
               onChange={handleChange}
               required
               min="1"
-              className="w-full p-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-transparent transition-colors duration-200"
+              className="w-full p-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-1 focus:ring-emerald-500 focus:outline-none dark:focus:ring-emerald-400 transition-colors duration-200"
             />
           </div>
 
@@ -93,7 +92,7 @@ const AddRecipe: React.FC = () => {
               value={recipe.difficulty}
               onChange={handleChange}
               required
-              className="w-full p-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-transparent transition-colors duration-200"
+              className="w-full p-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-1 focus:ring-emerald-500 focus:outline-none dark:focus:ring-emerald-400 transition-colors duration-200"
             >
               <option value="easy">Easy</option>
               <option value="medium">Medium</option>
@@ -111,7 +110,7 @@ const AddRecipe: React.FC = () => {
             value={recipe.ingredients.join("\n")}
             onChange={handleIngredientsChange}
             required
-            className="w-full p-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-transparent transition-colors duration-200"
+            className="w-full p-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-1 focus:ring-emerald-500 focus:outline-none dark:focus:ring-emerald-400 transition-colors duration-200"
             rows={5}
             placeholder="Enter ingredients, one per line"
           />
@@ -126,7 +125,7 @@ const AddRecipe: React.FC = () => {
             value={recipe.instructions}
             onChange={handleChange}
             required
-            className="w-full p-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-transparent transition-colors duration-200"
+            className="w-full p-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-1 focus:ring-emerald-500 focus:outline-none dark:focus:ring-emerald-400 transition-colors duration-200"
             rows={5}
             placeholder="Enter cooking instructions"
           />
@@ -142,7 +141,7 @@ const AddRecipe: React.FC = () => {
             value={recipe.cuisine}
             onChange={handleChange}
             required
-            className="w-full p-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-transparent transition-colors duration-200"
+            className="w-full p-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-1 focus:ring-emerald-500 focus:outline-none dark:focus:ring-emerald-400 focus:border-transparent transition-colors duration-200"
             placeholder="Enter cuisine type"
           />
         </div>
@@ -157,7 +156,7 @@ const AddRecipe: React.FC = () => {
             value={recipe.image}
             onChange={handleChange}
             required
-            className="w-full p-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-transparent transition-colors duration-200"
+            className="w-full p-3 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-1 focus:ring-emerald-500 focus:outline-none dark:focus:ring-emerald-400  transition-colors duration-200"
             placeholder="Enter image URL"
           />
         </div>
