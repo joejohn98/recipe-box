@@ -4,7 +4,7 @@ import { useRecipes } from "../context/RecipeContext";
 import { Search, Clock, Activity, Heart, BookmarkCheck } from "lucide-react";
 
 const RecipeList: React.FC = () => {
-  const { recipes, toggleFavorite } = useRecipes();
+  const { recipes, toggleFavorite, isLoading, error } = useRecipes();
   const [searchTerm, setSearchTerm] = useState("");
   const [searchCategory, setSearchCategory] = useState("name");
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
@@ -36,6 +36,24 @@ const RecipeList: React.FC = () => {
       return "";
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-[200px]">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center min-h-[200px]">
+        <p className="text-red-500 dark:text-red-400 text-xl font-semibold">
+          Error loading recipes. Please try again later.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

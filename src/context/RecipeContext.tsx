@@ -16,6 +16,8 @@ export interface Recipe {
 
 interface RecipeContextType {
   recipes: Recipe[];
+  isLoading: boolean;
+  error: string | null;
   addRecipe: (recipe: Omit<Recipe, "id">) => void;
   deleteRecipe: (id: string) => void;
   updateRecipe: (id: string, recipe: Omit<Recipe, "id">) => void;
@@ -28,19 +30,41 @@ const RecipeContext = createContext<RecipeContextType | undefined>(undefined);
 export const RecipeProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [recipes, setRecipes] = useState<Recipe[]>(() => {
-    const savedRecipes = localStorage.getItem("recipes");
-    // Initialize with default recipes if no recipes exist in localStorage
-    if (!savedRecipes || JSON.parse(savedRecipes).length === 0) {
-      localStorage.setItem("recipes", JSON.stringify(defaultRecipes));
-      return defaultRecipes;
-    }
-    return JSON.parse(savedRecipes);
-  });
-
-  useEffect(() => {
-    localStorage.setItem("recipes", JSON.stringify(recipes));
-  }, [recipes]);
+  
+   const [recipes, setRecipes] = useState<Recipe[]>([]);
+   const [isLoading, setIsLoading] = useState(true);
+   const [error, setError] = useState<string | null>(null);
+ 
+   useEffect(() => {
+     const loadRecipes = () => {
+       try {
+         const savedRecipes = localStorage.getItem('recipes');
+         if (!savedRecipes || JSON.parse(savedRecipes).length === 0) {
+           localStorage.setItem('recipes', JSON.stringify(defaultRecipes));
+           setRecipes(defaultRecipes);
+         } else {
+           setRecipes(JSON.parse(savedRecipes));
+         }
+       } catch {
+         setError('Failed to load recipes. Using default recipes instead.');
+         setRecipes(defaultRecipes);
+       } finally {
+         setIsLoading(false);
+       }
+     };
+ 
+     loadRecipes();
+   }, []);
+ 
+   useEffect(() => {
+     if (!isLoading && !error) {
+       try {
+         localStorage.setItem('recipes', JSON.stringify(recipes));
+       } catch {
+         setError('Failed to save recipes to local storage.');
+       }
+     }
+   }, [recipes, isLoading, error]);
 
   const addRecipe = (recipe: Omit<Recipe, "id">) => {
     setRecipes([...recipes, { ...recipe, id: uuidv4() }]);
@@ -76,6 +100,8 @@ export const RecipeProvider: React.FC<{ children: React.ReactNode }> = ({
     <RecipeContext.Provider
       value={{
         recipes,
+        isLoading,
+        error,
         addRecipe,
         deleteRecipe,
         updateRecipe,
