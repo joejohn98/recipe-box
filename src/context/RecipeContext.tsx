@@ -18,11 +18,13 @@ interface RecipeContextType {
   recipes: Recipe[];
   isLoading: boolean;
   error: string | null;
+  imageError: Record<string, boolean>;
   addRecipe: (recipe: Omit<Recipe, "id">) => void;
   deleteRecipe: (id: string) => void;
   updateRecipe: (id: string, recipe: Omit<Recipe, "id">) => void;
   toggleFavorite: (id: string) => void;
   getFavorites: () => Recipe[];
+  handleImageError: (recipeId: string) => void;
 }
 
 const RecipeContext = createContext<RecipeContextType | undefined>(undefined);
@@ -34,6 +36,7 @@ export const RecipeProvider: React.FC<{ children: React.ReactNode }> = ({
    const [recipes, setRecipes] = useState<Recipe[]>([]);
    const [isLoading, setIsLoading] = useState(true);
    const [error, setError] = useState<string | null>(null);
+   const [imageError, setImageError] = useState<Record<string, boolean>>({});
  
    useEffect(() => {
      const loadRecipes = () => {
@@ -75,11 +78,16 @@ export const RecipeProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const updateRecipe = (id: string, updatedRecipe: Omit<Recipe, "id">) => {
-    setRecipes(
-      recipes.map((recipe) =>
+    setRecipes((prevRecipes) =>
+      prevRecipes.map((recipe) =>
         recipe.id === id ? { ...updatedRecipe, id } : recipe
       )
     );
+    setImageError(prev => {
+      const newState = { ...prev };
+      delete newState[id];
+      return newState;
+    });
   };
 
   const toggleFavorite = (id: string) => {
@@ -96,12 +104,18 @@ export const RecipeProvider: React.FC<{ children: React.ReactNode }> = ({
     return recipes.filter((recipe) => recipe.isFavorite);
   };
 
+  const handleImageError = (recipeId: string) => {
+    setImageError(prev => ({ ...prev, [recipeId]: true }));
+  }
+
   return (
     <RecipeContext.Provider
       value={{
         recipes,
         isLoading,
         error,
+        imageError,
+        handleImageError,
         addRecipe,
         deleteRecipe,
         updateRecipe,
