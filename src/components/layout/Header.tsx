@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useTheme } from "../context/ThemeContext";
+import { useTheme } from "../../context/ThemeContext";
 import { Sun, Moon, UtensilsCrossed } from "lucide-react";
 
 const Header: React.FC = () => {

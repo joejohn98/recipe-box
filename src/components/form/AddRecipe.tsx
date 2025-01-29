@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Recipe, useRecipes } from "../context/RecipeContext";
+import { Recipe, useRecipes } from "../../context/RecipeContext";
 import toast from "react-hot-toast";
 import { Plus, Clock, Activity } from "lucide-react";
 
