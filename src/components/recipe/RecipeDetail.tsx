@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useRecipes, Recipe } from "../../context/RecipeContext";
 import toast from "react-hot-toast";
@@ -11,6 +11,7 @@ const RecipeDetail: React.FC = () => {
   const navigate = useNavigate();
   const {
     recipes,
+    isLoading,
     deleteRecipe,
     updateRecipe,
     toggleFavorite,
@@ -20,19 +21,31 @@ const RecipeDetail: React.FC = () => {
   const recipe = recipes.find((r) => r.id === id);
   const [isEditing, setIsEditing] = useState(false);
   const [editedRecipe, setEditedRecipe] = useState<Omit<Recipe, "id"> | null>(
-    recipe
-      ? {
-          name: recipe.name,
-          ingredients: recipe.ingredients,
-          instructions: recipe.instructions,
-          cuisine: recipe.cuisine,
-          image: recipe.image,
-          cookingTime: recipe.cookingTime,
-          difficulty: recipe.difficulty,
-          isFavorite: recipe.isFavorite,
-        }
-      : null
+    null
   );
+
+  useEffect(() => {
+    if (recipe) {
+      setEditedRecipe({
+        name: recipe.name,
+        ingredients: recipe.ingredients,
+        instructions: recipe.instructions,
+        cuisine: recipe.cuisine,
+        image: recipe.image,
+        cookingTime: recipe.cookingTime,
+        difficulty: recipe.difficulty,
+        isFavorite: recipe.isFavorite,
+      });
+    }
+  }, [recipe]);
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-[200px] mt-16">
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-emerald-500"></div>
+      </div>
+    );
+  }
 
   if (!recipe || !editedRecipe) {
     return (

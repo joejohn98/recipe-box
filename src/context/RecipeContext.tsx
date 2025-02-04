@@ -32,42 +32,41 @@ const RecipeContext = createContext<RecipeContextType | undefined>(undefined);
 export const RecipeProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  
-   const [recipes, setRecipes] = useState<Recipe[]>([]);
-   const [isLoading, setIsLoading] = useState(true);
-   const [error, setError] = useState<string | null>(null);
-   const [imageError, setImageError] = useState<Record<string, boolean>>({});
- 
-   useEffect(() => {
-     const loadRecipes = () => {
-       try {
-         const savedRecipes = localStorage.getItem('recipes');
-         if (!savedRecipes || JSON.parse(savedRecipes).length === 0) {
-           localStorage.setItem('recipes', JSON.stringify(defaultRecipes));
-           setRecipes(defaultRecipes);
-         } else {
-           setRecipes(JSON.parse(savedRecipes));
-         }
-       } catch {
-         setError('Failed to load recipes. Using default recipes instead.');
-         setRecipes(defaultRecipes);
-       } finally {
-         setIsLoading(false);
-       }
-     };
- 
-     loadRecipes();
-   }, []);
- 
-   useEffect(() => {
-     if (!isLoading && !error) {
-       try {
-         localStorage.setItem('recipes', JSON.stringify(recipes));
-       } catch {
-         setError('Failed to save recipes to local storage.');
-       }
-     }
-   }, [recipes, isLoading, error]);
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [imageError, setImageError] = useState<Record<string, boolean>>({});
+
+  useEffect(() => {
+    const loadRecipes = () => {
+      try {
+        const savedRecipes = localStorage.getItem("recipes");
+        if (!savedRecipes || JSON.parse(savedRecipes).length === 0) {
+          localStorage.setItem("recipes", JSON.stringify(defaultRecipes));
+          setRecipes(defaultRecipes);
+        } else {
+          setRecipes(JSON.parse(savedRecipes));
+        }
+      } catch {
+        setError("Failed to load recipes. Using default recipes instead.");
+        setRecipes(defaultRecipes);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadRecipes();
+  }, []);
+
+  useEffect(() => {
+    if (!isLoading && !error) {
+      try {
+        localStorage.setItem("recipes", JSON.stringify(recipes));
+      } catch {
+        setError("Failed to save recipes to local storage.");
+      }
+    }
+  }, [recipes, isLoading, error]);
 
   const addRecipe = (recipe: Omit<Recipe, "id">) => {
     setRecipes([...recipes, { ...recipe, id: uuidv4() }]);
@@ -83,7 +82,7 @@ export const RecipeProvider: React.FC<{ children: React.ReactNode }> = ({
         recipe.id === id ? { ...updatedRecipe, id } : recipe
       )
     );
-    setImageError(prev => {
+    setImageError((prev) => {
       const newState = { ...prev };
       delete newState[id];
       return newState;
@@ -105,8 +104,8 @@ export const RecipeProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const handleImageError = (recipeId: string) => {
-    setImageError(prev => ({ ...prev, [recipeId]: true }));
-  }
+    setImageError((prev) => ({ ...prev, [recipeId]: true }));
+  };
 
   return (
     <RecipeContext.Provider
