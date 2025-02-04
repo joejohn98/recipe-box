@@ -8,6 +8,7 @@ import RecipeDetail from "./components/recipe/RecipeDetail";
 import RecipeList from "./components/recipe/RecipeList";
 import AddRecipe from "./components/form/AddRecipe";
 import Header from "./components/layout/Header";
+import NotFound from "./components/common/NotFound";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
                 <Route path="/" element={<RecipeList />} />
                 <Route path="/add" element={<AddRecipe />} />
                 <Route path="/recipe/:id" element={<RecipeDetail />} />
+                <Route path="*" element={<NotFound />} />
               </Routes>
             </main>
           </div>
