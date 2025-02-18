@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { ArrowLeft } from "lucide-react";
 import EditForm from "../form/EditForm";
 import RecipeView from "./RecipeView";
+import { printRecipe } from "../../utils/printUtils";
 
 const RecipeDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -88,45 +89,8 @@ const RecipeDetail: React.FC = () => {
   };
 
   const handlePrint = () => {
-    const printWindow = window.open("", "_blank");
-    if (printWindow) {
-      printWindow.document.write(`
-        <html>
-          <head>
-            <title>${recipe.name} - Recipe</title>
-            <style>
-              body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
-              h1 { color: #333; }
-              .meta { color: #666; margin-bottom: 20px; }
-              .ingredients { margin-bottom: 20px; }
-              .ingredients h2 { color: #444; }
-              .instructions { line-height: 1.6; }
-            </style>
-          </head>
-          <body>
-            <h1>${recipe.name}</h1>
-            <div class="meta">
-              <p>Cuisine: ${recipe.cuisine}</p>
-              <p>Cooking Time: ${recipe.cookingTime} minutes</p>
-              <p>Difficulty: ${recipe.difficulty}</p>
-            </div>
-            <div class="ingredients">
-              <h2>Ingredients</h2>
-              <ul>
-                ${recipe.ingredients
-                  .map((ingredient) => `<li>${ingredient}</li>`)
-                  .join("")}
-              </ul>
-            </div>
-            <div class="instructions">
-              <h2>Instructions</h2>
-              <p>${recipe.instructions}</p>
-            </div>
-          </body>
-        </html>
-      `);
-      printWindow.document.close();
-      printWindow.print();
+    if (recipe) {
+      printRecipe(recipe);
     }
   };
 
