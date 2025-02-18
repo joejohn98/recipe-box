@@ -122,6 +122,7 @@ export const printRecipe = (recipe: Recipe): void => {
   if (printWindow) {
     printWindow.document.write(generatePrintTemplate(recipe));
     printWindow.document.close();
+    printWindow.print();
   } else {
     console.error("Failed to open print window");
   }
