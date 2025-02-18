@@ -39,8 +39,10 @@ const RecipeList: React.FC = () => {
         ? recipe.ingredients.some((ingredient) =>
             ingredient.toLowerCase().includes(searchValue)
           )
-        : recipe.cuisine.toLowerCase().includes(searchValue);
-
+        : searchCategory === "cuisine"
+        ? recipe.cuisine.toLowerCase().includes(searchValue)
+        : false; // Exclude recipes if searchCategory is invalid
+  
     return showFavoritesOnly
       ? matchesSearch && recipe.isFavorite
       : matchesSearch;
