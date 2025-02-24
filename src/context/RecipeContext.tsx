@@ -42,7 +42,6 @@ export const RecipeProvider: React.FC<{ children: React.ReactNode }> = ({
       try {
         const savedRecipes = localStorage.getItem("recipes");
         if (!savedRecipes || JSON.parse(savedRecipes).length === 0) {
-          localStorage.setItem("recipes", JSON.stringify(defaultRecipes));
           setRecipes(defaultRecipes);
         } else {
           setRecipes(JSON.parse(savedRecipes));
@@ -58,6 +57,9 @@ export const RecipeProvider: React.FC<{ children: React.ReactNode }> = ({
     loadRecipes();
   }, []);
 
+  console.log(recipes);
+
+  // Save recipes to localStorage whenever they change
   useEffect(() => {
     if (!isLoading && !error) {
       try {
@@ -69,7 +71,10 @@ export const RecipeProvider: React.FC<{ children: React.ReactNode }> = ({
   }, [recipes, isLoading, error]);
 
   const addRecipe = (recipe: Omit<Recipe, "id">) => {
-    setRecipes([...recipes, { ...recipe, id: uuidv4() }]);
+    const newRecipe = { ...recipe, id: uuidv4() };
+    // If this is the first user-added recipe, clear default recipes
+    const isFirstUserRecipe = recipes.every(r => defaultRecipes.some(dr => dr.id === r.id));
+    setRecipes(isFirstUserRecipe ? [newRecipe] : [...recipes, newRecipe]);
   };
 
   const deleteRecipe = (id: string) => {
