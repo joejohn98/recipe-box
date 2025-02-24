@@ -57,7 +57,6 @@ export const RecipeProvider: React.FC<{ children: React.ReactNode }> = ({
     loadRecipes();
   }, []);
 
-  console.log(recipes);
 
   // Save recipes to localStorage whenever they change
   useEffect(() => {
